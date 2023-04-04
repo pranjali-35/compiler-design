@@ -1,22 +1,24 @@
 %{
 int count=0;
 %}
-op [+-*/]
+spe [+!@#$%^&*(){}\|'',./?~]
 letter [a-zA-Z_]
 digit [0-9]
 id ({letter}+{digit}*)+
 notid ({digit}+{letter}*)+
+notid2 ({letter}{digit}{spe}+{letter}{digit})+
+%%
+("int")|("float")|("char")|("case")|("default")|("if")|("for")|("printf")|("scanf") {printf("%s is a keyword\n",yytext);}
 
+{notid} {printf("%s is not a identifier\n",yytext);}
+{notid2} {printf("%s is not a identifier\n",yytext);}
+{id} {printf("%s is a identifier\n",yytext);count++;}
+{digit}* {printf("%s is not a identifier\n",yytext);}
 %%
-[\t\n]+
-("int")|("float")|("scanf")|("printf")|("if") {printf("%s is a keyword\n",yytext);}
-{id} {printf("%s is an identifier\n",yytext);count++;}
-{notid} {printf("%s is not an identifier\n",yytext);}
-%%
-int yywrap(){}
-int main(int argc,int *argv[])
+int yywrap(){return 1;}
+int main()
 {
 yylex();
-printf("Total number of identifiers:%d\n",count);
+printf("Total Number of Identifiers: %d\n",count);
 return 0;
 }
