@@ -2,10 +2,10 @@
 int count=0;
 %}
 op [+-*/]
-letter [a-zA-Z]
+letter [a-zA-Z_]
 digit [0-9]
-id {letter}*|({letter}{digit})+
-notid ({digit}{letter}+)
+id ({letter}+{digit}*)+
+notid ({digit}+{letter}*)+
 
 %%
 [\t\n]+
